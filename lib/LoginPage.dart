@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/HomePage.dart';
 
 class LoginPage extends StatefulWidget{
   @override
@@ -37,7 +38,7 @@ class LoginState extends State<LoginPage>{
                 textColor: Colors.white,
                 color: Colors.blue,
                 child: Text("Login",style: new TextStyle(fontSize: 18),),
-                onPressed: ()=>debugPrint('${editController.text}'+'${passWDEditController.text}'),
+                onPressed: ()=> Navigator.push(context, new MaterialPageRoute(builder: (context)=>HomePage())),
               ),
             )
           ],
