@@ -24,7 +24,12 @@ class HomePage extends StatelessWidget{
               child:
                 Row(
                   children: <Widget>[
-                    Expanded(child:Center(child: Text("集合计划"),),flex: 1) ,
+                    Expanded(child:
+                    Center(child:
+                    RaisedButton(child:
+                    Text("集合计划"),
+                      onPressed:(){},
+                    ),),flex: 1) ,
                     Expanded(child: Center(child: Text("公募产品"),),flex: 1)
             ],
           )),

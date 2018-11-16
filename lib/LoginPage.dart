@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/GithubHome.dart';
 import 'package:flutter_app/HomePage.dart';
 import 'package:flutter_app/HomePageFul.dart';
+import 'package:flutter_app/api/CommonService.dart';
+import 'package:html/parser.dart' show parse;
+import 'package:flutter_app/entity/githubuser.dart';
+//import 'package:html/dom.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,12 +13,23 @@ class LoginPage extends StatefulWidget {
     // TODO: implement createState
     return new LoginState();
   }
+
 }
 
 class LoginState extends State<LoginPage> {
   var editController = TextEditingController();
   var passWDEditController = TextEditingController();
-
+  var authentivity;
+  githubuser user;
+  @override
+  void initState() {
+    super.initState();
+    CommonService().getlogin((res){
+     var document =  parse(res).getElementById('login').nodes[3].nodes[1];
+      authentivity = document.attributes['value'];
+      print(authentivity);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -44,8 +60,19 @@ class LoginState extends State<LoginPage> {
                     "Login",
                     style: new TextStyle(fontSize: 18),
                   ),
-                  onPressed: () => Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => HomePageFul())),
+                  onPressed: () {
+                    CommonService().loginPost(editController.text,
+                        passWDEditController.text,
+                    (res){
+                      user = githubuser.fromJson(res);
+                      print(res);
+                      Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) => GithubHome()));
+                    });
+                  }
+//                  
+//                  => Navigator.push(context,
+//                      new MaterialPageRoute(builder: (context) => HomePageFul())),
                 ),
               )
             ],
