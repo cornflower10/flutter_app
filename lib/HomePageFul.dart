@@ -133,6 +133,8 @@ class HomePageState extends State<HomePageFul> {
         homeBanner = homebanner.fromJson(data);
       });
       print("respose:" + homeBanner.toString());
+    },(error){
+
     });
   }
 }

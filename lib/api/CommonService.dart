@@ -14,10 +14,11 @@ class CommonService{
       'X-App-Env':'dev'}
     );
   }
-  void getBanner(Function callBack) async{
+  void getBanner(Function callBack,Function errorCallBack) async{
     Dio().get(Api.HOME_BANNER,options: _getOptions())
         .then((response){callBack(response.data);},)
         .catchError((error){
+           errorCallBack(error);
           print('error:'+error.toString());
     });
   }
