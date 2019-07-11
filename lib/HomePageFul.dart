@@ -5,20 +5,27 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app/api/CommonService.dart';
 import 'package:flutter_app/entity/homebanner.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-
+import 'package:flutter/services.dart';
 class HomePageFul extends StatefulWidget {
+
+    bool  login;
+  HomePageFul({Key key,this.login}):super(key:key);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return new HomePageState();
+    return new HomePageState(login:this.login);
   }
 }
 
+
+
 class HomePageState extends State<HomePageFul> {
   homebanner homeBanner;
-
+ bool login;
   var result;
+  HomePageState({Key key,this.login}){
 
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -43,7 +50,7 @@ class HomePageState extends State<HomePageFul> {
                 Container(
                     margin: EdgeInsets.only(top: 16),
                     height: 30,
-                    child: Row(
+                    child: login?Text("test"):Row(
                       children: <Widget>[
                         Expanded(
                             child: Center(
@@ -72,11 +79,18 @@ class HomePageState extends State<HomePageFul> {
             ),
           ),
         ),
-        onWillPop: () {
-          Navigator.pop(context);//返回按钮监听移除此页面
-        });
+//        onWillPop: () {
+//          Navigator.pop(context);//返回按钮监听移除此页面
+//        });
+        onWillPop: ()  async {
+          await pop();
+        },);
   }
 
+//结束app
+  static Future<void> pop() async {
+    await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+  }
   void getReact() async {
     final channel = const MethodChannel('samples.flutter.io/battery');
     var success = await channel.invokeMethod('battery');

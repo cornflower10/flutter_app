@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/HomePageFul.dart';
 import 'package:flutter_app/LoginPage.dart';
 
 void main() => runApp(new MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: new LoginPage(),
+      home: new HomePageFul(login:true),
     );
   }
 }
