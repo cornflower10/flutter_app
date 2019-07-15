@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/HomePageFul.dart';
 import 'package:flutter_app/LoginPage.dart';
+import 'package:flutter_app/widget/navigation_bar_tab.dart';
 
 void main() => runApp(new MyApp());
 
@@ -20,9 +21,9 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: new HomePageFul(login:true),
+      home: NavigationBarTab()
     );
   }
 }

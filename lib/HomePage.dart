@@ -71,6 +71,8 @@ class HomePage extends StatelessWidget{
      print("respose:"+homeBanner.toString());
 
 
+    },(error){
+
     });
   }
 
