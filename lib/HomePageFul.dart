@@ -19,7 +19,7 @@ class HomePageFul extends StatefulWidget {
 
 
 
-class HomePageState extends State<HomePageFul> {
+class HomePageState extends State<HomePageFul> with AutomaticKeepAliveClientMixin {
   homebanner homeBanner;
  bool login;
   var result;
@@ -37,6 +37,7 @@ class HomePageState extends State<HomePageFul> {
   Widget build(BuildContext context) {
     // TODO: implement build
               //监听返回按钮
+    super.build(context);
     return new WillPopScope(
         child: Scaffold(
           body: new Container(
@@ -137,4 +138,8 @@ class HomePageState extends State<HomePageFul> {
 
     });
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

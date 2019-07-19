@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/HomePageFul.dart';
+import 'package:flutter_app/page/my_account.dart';
+import 'package:flutter_app/page/order.dart';
 import 'package:flutter_app/utils/image_utils.dart';
 
 class NavigationBarTab extends StatefulWidget {
@@ -25,16 +27,18 @@ class NavigationBarTabState extends State<NavigationBarTab> {
     // TODO: implement initState
     super.initState();
   }
+
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return new Scaffold(bottomNavigationBar: BottomNavigationBar(
+//     super.build(context);
+    return  Scaffold(bottomNavigationBar: BottomNavigationBar(
       onTap: _onTap,
       items: _listItems(), currentIndex: _currentIndex,
       type: BottomNavigationBarType.fixed,),
       body: PageView(physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
-        children: <Widget>[HomePageFul(login:false),HomePageFul(login:true),HomePageFul(login:false)],
+        children: <Widget>[HomePageFul(login:false),Order(),MyAccount()],
         onPageChanged: _pageChanged,),);
   }
 
