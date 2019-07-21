@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_app/utils/utils.dart';
+//import 'package:cached_network_image/cached_network_image.dart';
+//import 'package:flutter/material.dart';
+//import 'package:flutter_app/utils/utils.dart';
 
 /// 加载本地资源图片
 //Widget loadAssetImage(String name, {double width, double height, BoxFit fit}){

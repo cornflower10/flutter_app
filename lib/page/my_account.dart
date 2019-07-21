@@ -46,7 +46,7 @@ class My extends State<MyAccount> with AutomaticKeepAliveClientMixin {
               ),
               Card(
                 elevation: 0.8,
-                margin: EdgeInsets.only(left: 10,right: 10,top: 80),
+                margin: EdgeInsets.only(left: 10, right: 10, top: 80),
                 clipBehavior: Clip.hardEdge,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -79,12 +79,7 @@ class My extends State<MyAccount> with AutomaticKeepAliveClientMixin {
                           new Expanded(
                               child: Container(
                             alignment: Alignment.topRight,
-                            child: InkWell(
-                              child: Text(
-                                "兑换",
-                              ),
-                              onTap: null,
-                            ),
+                              child: exchange(context),
                             margin: EdgeInsets.only(top: 10),
                           )),
                         ],
@@ -102,12 +97,9 @@ class My extends State<MyAccount> with AutomaticKeepAliveClientMixin {
                           new Expanded(
                               child: Container(
                             alignment: Alignment.topRight,
-                            child: InkWell(
-                              child: Text(
-                                "兑换",
-                              ),
-                              onTap: null,
-                            ),
+
+                              child: exchange(context),
+
                             margin: EdgeInsets.only(top: 10),
                           )),
                         ],
@@ -125,12 +117,9 @@ class My extends State<MyAccount> with AutomaticKeepAliveClientMixin {
                           new Expanded(
                               child: Container(
                             alignment: Alignment.topRight,
-                            child: InkWell(
-                              child: Text(
-                                "兑换",
-                              ),
-                              onTap: null,
-                            ),
+
+                              child: exchange(context),
+
                             margin: EdgeInsets.only(top: 10),
                           )),
                         ],
@@ -152,7 +141,7 @@ class My extends State<MyAccount> with AutomaticKeepAliveClientMixin {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8))),
                 child: Container(
-                  margin:EdgeInsets.all(16) ,
+                  margin: EdgeInsets.all(16),
                   child: Column(
                     children: <Widget>[
                       Row(
@@ -174,7 +163,7 @@ class My extends State<MyAccount> with AutomaticKeepAliveClientMixin {
                               child: InkWell(
                                 child: Container(
                                     alignment: Alignment.topRight,
-                                    child: Text("签到")),
+                                    child: sign()),
                                 onTap: null,
                               ),
                             )
@@ -190,33 +179,56 @@ class My extends State<MyAccount> with AutomaticKeepAliveClientMixin {
         ]));
   }
 
-  OverlayEntry show() {
-    //创建一个OverlayEntry对象
-    OverlayEntry overlayEntry = new OverlayEntry(builder: (context) {
-      //外层使用Positioned进行定位，控制在Overlay中的位置
-      return new Positioned(
-          top: (MediaQuery.of(context).size.height / 9) * 2,
-          child: new Material(
-            child: new Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              padding: EdgeInsets.all(16),
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.center,
-              child: new Card(
-                child: new Padding(
-                  padding: EdgeInsets.all(8),
-                  child: new Text("test"),
-                ),
-                color: Colors.grey,
-              ),
-            ),
-          ));
-    });
-    //往Overlay中插入插入OverlayEntry
-
-    //两秒后，移除Toast
-//    new Future.delayed(Duration(seconds: 2)).then((value) {
-//      overlayEntry.remove();
-//    });
+  Widget sign() {
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          child: Text("签到"),
+          padding: EdgeInsets.only(left: 16,right: 16,top: 5,bottom: 5),
+          color: Colors.green,
+        ));
   }
-}
+  Widget exchange(BuildContext context) {
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          width: 65,
+          height: 26,
+          child: FlatButton(child: Text("兑换"),onPressed: _neverSatisfied,),
+          color: Colors.green,
+        ));
+  }
+
+  Future<void> _neverSatisfied() async { {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('兑换'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('确定要兑换？'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('取消'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('确定'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}}
