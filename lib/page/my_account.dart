@@ -37,98 +37,100 @@ class My extends State<MyAccount> with AutomaticKeepAliveClientMixin {
           centerTitle: true,
         ),
         body: Stack(children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                color: Colors.green,
-                height: height / 3,
-                width: width,
-              ),
-              Card(
-                elevation: 0.8,
-                margin: EdgeInsets.only(left: 10, right: 10, top: 80),
-                clipBehavior: Clip.hardEdge,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  child: new Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text("兑换区："),
-                          InkWell(
-                            child: Text(
-                              "兑换规则",
-                              style: TextStyle(),
-                            ),
-                            onTap: null,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            child: Text("月卡："),
-                            margin: EdgeInsets.only(top: 10),
-                          ),
-                          Container(
-                            child: Text("消耗30环保星"),
-                            margin: EdgeInsets.only(top: 10),
-                          ),
-                          new Expanded(
-                              child: Container(
-                            alignment: Alignment.topRight,
-                              child: exchange(context),
-                            margin: EdgeInsets.only(top: 10),
-                          )),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            child: Text("季卡："),
-                            margin: EdgeInsets.only(top: 10),
-                          ),
-                          Container(
-                            child: Text("消耗120环保星"),
-                            margin: EdgeInsets.only(top: 10),
-                          ),
-                          new Expanded(
-                              child: Container(
-                            alignment: Alignment.topRight,
-
-                              child: exchange(context),
-
-                            margin: EdgeInsets.only(top: 10),
-                          )),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            child: Text("年卡："),
-                            margin: EdgeInsets.only(top: 10),
-                          ),
-                          Container(
-                            child: Text("消耗360环保星"),
-                            margin: EdgeInsets.only(top: 10),
-                          ),
-                          new Expanded(
-                              child: Container(
-                            alignment: Alignment.topRight,
-
-                              child: exchange(context),
-
-                            margin: EdgeInsets.only(top: 10),
-                          )),
-                        ],
-                      ),
-                    ],
-                  ),
+          Container(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  color: Colors.green,
+                  height: height / 3,
+                  width: width,
                 ),
-              )
-            ],
+                Card(
+                  elevation: 0.8,
+                  margin: EdgeInsets.only(left: 10, right: 10, top: 80),
+                  clipBehavior: Clip.hardEdge,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: new Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text("兑换区："),
+                            InkWell(
+                              child: Text(
+                                "兑换规则",
+                                style: TextStyle(),
+                              ),
+                              onTap: null,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              child: Text("月卡："),
+                              margin: EdgeInsets.only(top: 10),
+                            ),
+                            Container(
+                              child: Text("消耗30环保星"),
+                              margin: EdgeInsets.only(top: 10),
+                            ),
+                            new Expanded(
+                                child: Container(
+                              alignment: Alignment.topRight,
+                                child: exchange(context),
+                              margin: EdgeInsets.only(top: 10),
+                            )),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              child: Text("季卡："),
+                              margin: EdgeInsets.only(top: 10),
+                            ),
+                            Container(
+                              child: Text("消耗120环保星"),
+                              margin: EdgeInsets.only(top: 10),
+                            ),
+                            new Expanded(
+                                child: Container(
+                              alignment: Alignment.topRight,
+
+                                child: exchange(context),
+
+                              margin: EdgeInsets.only(top: 10),
+                            )),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              child: Text("年卡："),
+                              margin: EdgeInsets.only(top: 10),
+                            ),
+                            Container(
+                              child: Text("消耗360环保星"),
+                              margin: EdgeInsets.only(top: 10),
+                            ),
+                            new Expanded(
+                                child: Container(
+                              alignment: Alignment.topRight,
+
+                                child: exchange(context),
+
+                              margin: EdgeInsets.only(top: 10),
+                            )),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
           Positioned(
             left: 30,

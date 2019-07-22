@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/HomePageFul.dart';
+import 'package:flutter_app/page/home.dart';
 import 'package:flutter_app/page/my_account.dart';
 import 'package:flutter_app/page/order.dart';
 import 'package:flutter_app/utils/image_utils.dart';
@@ -38,7 +39,7 @@ class NavigationBarTabState extends State<NavigationBarTab> {
       type: BottomNavigationBarType.fixed,),
       body: PageView(physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
-        children: <Widget>[HomePageFul(login:false),Order(),MyAccount()],
+        children: <Widget>[Home(),Order(),MyAccount()],
         onPageChanged: _pageChanged,),);
   }
 
