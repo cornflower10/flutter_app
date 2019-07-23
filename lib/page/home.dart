@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/LoginPage.dart';
 import 'package:flutter_app/page/SortTrash.dart';
-import 'package:flutter_app/utils/TextEllipsis.dart';
+import 'package:flutter_app/widget/TextEllipsis.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class Home extends StatefulWidget {
@@ -76,7 +76,6 @@ class HomeState extends State<Home>
             Expanded(
               flex: 4,
               child: Container(
-                height: 80,
                 padding: EdgeInsets.only(left: 16, right: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

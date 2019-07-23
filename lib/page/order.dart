@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/page/AddOrder.dart';
 import 'package:flutter_app/page/order_list.dart';
 
 class Order extends StatefulWidget {
@@ -32,14 +33,20 @@ class OrderState extends State<Order>
     super.build(context);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Offstage(child:
-          FloatingActionButton(
-        onPressed: () => debugPrint("--"),
-        child: Container(
-          child: Text("上门回收"),
-          padding: EdgeInsets.all(10),
+      floatingActionButton: Offstage(
+        child: FloatingActionButton(
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AddOrder())),
+          child: Container(
+            child: Text(
+              "上门回收",
+              style: TextStyle(fontSize: 10),
+            ),
+            padding: EdgeInsets.all(10),
+          ),
         ),
-      ),offstage: !show,),
+        offstage: !show,
+      ),
       appBar: AppBar(
         title: Text(
           "我的订单",
@@ -53,12 +60,18 @@ class OrderState extends State<Order>
         ),
       ),
       body: TabBarView(
-        children: <Widget>[OrderList(callback:(value){
-          setState(() {
-            print(value);
-            show = value;
-          });
-        },), OrderList(), Text("3")],
+        children: <Widget>[
+          OrderList(
+            callback: (value) {
+              setState(() {
+                print(value);
+                show = value;
+              });
+            },
+          ),
+          OrderList(),
+          Text("3")
+        ],
         controller: _tabController,
       ),
     );
