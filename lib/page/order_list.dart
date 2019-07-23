@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class OrderList extends StatefulWidget{
+  bool show = true;
+  final callback;
+  OrderList({Key key,this.show,this.callback}):super(key:key);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -11,19 +15,22 @@ class OrderList extends StatefulWidget{
 }
 
 class OrderListState extends State<OrderList> with AutomaticKeepAliveClientMixin{
+  bool show;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     print("OrderListState");
+    show = widget.show;
   }
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return ListView.builder(
+    return NotificationListener(child: ListView.builder(
       itemBuilder: _buildItem,
       itemCount: 20,
-    );
+    ) ,onNotification: _onNotification,);
+
   }
 
   Widget _buildItem(BuildContext c, int index) {
@@ -87,4 +94,27 @@ class OrderListState extends State<OrderList> with AutomaticKeepAliveClientMixin
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+
+  bool _onNotification(Notification notification) {
+
+    switch (notification.runtimeType){
+      case ScrollStartNotification: update(false); break;
+      case ScrollUpdateNotification: update(false); break;
+      case ScrollEndNotification: update(true); break;
+      case OverscrollNotification: update(true); break;
+    }
+    if(notification is ScrollEndNotification){
+
+    }else if(notification is ScrollUpdateNotification){
+      show = false;
+      widget.callback(show);
+    }
+  }
+
+  update(value){
+    setState(() {
+      show = value;
+      widget.callback(show);
+    });
+  }
 }

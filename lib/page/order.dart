@@ -12,6 +12,7 @@ class Order extends StatefulWidget {
 class OrderState extends State<Order>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   TabController _tabController;
+  bool show = true;
   final List<Tab> tabs = [
     Tab(text: "等待上门"),
     Tab(text: "已完成"),
@@ -30,6 +31,15 @@ class OrderState extends State<Order>
     // TODO: implement build
     super.build(context);
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Offstage(child:
+          FloatingActionButton(
+        onPressed: () => debugPrint("--"),
+        child: Container(
+          child: Text("上门回收"),
+          padding: EdgeInsets.all(10),
+        ),
+      ),offstage: !show,),
       appBar: AppBar(
         title: Text(
           "我的订单",
@@ -43,7 +53,12 @@ class OrderState extends State<Order>
         ),
       ),
       body: TabBarView(
-        children: <Widget>[OrderList(), OrderList(), Text("3")],
+        children: <Widget>[OrderList(callback:(value){
+          setState(() {
+            print(value);
+            show = value;
+          });
+        },), OrderList(), Text("3")],
         controller: _tabController,
       ),
     );
