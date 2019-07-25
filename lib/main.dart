@@ -1,17 +1,32 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/HomePageFul.dart';
 import 'package:flutter_app/LoginPage.dart';
+import 'package:flutter_app/utils/LogUtils.dart';
 import 'package:flutter_app/widget/navigation_bar_tab.dart';
 
 void main() {
-  // 强制竖屏
-//  SystemChrome.setPreferredOrientations([
-//    DeviceOrientation.portraitUp,
-//    DeviceOrientation.portraitDown
-//  ]);
+//   强制竖屏
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
 
+  FlutterError.onError = (FlutterErrorDetails d) {
+    LogUtils.reportLog(d);
+  };
   runApp(new MyApp());
+//  runZoned(
+//          () => runApp(new MyApp()),
+//      zoneSpecification: ZoneSpecification(
+//          print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
+//            LogUtils.collectLog(line);
+//          }), onError: (Object o, StackTrace stack) {
+//    LogUtils.reportLog(LogUtils.makeDetails(o, stack));
+//  }
+//  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,25 +34,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.green,
-      ),
-      home: NavigationBarTab()
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.green,
+        ),
+        home: NavigationBarTab()
     );
   }
 }
 
-class Count extends StatefulWidget{
+class Count extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -46,9 +61,10 @@ class Count extends StatefulWidget{
 
 }
 
-class CountState extends State<Count>{
+class CountState extends State<Count> {
   int count = 0;
-  void increment(){
+
+  void increment() {
     setState(() {
       count++;
     });
@@ -60,17 +76,17 @@ class CountState extends State<Count>{
 
 
     return new Container(
-      decoration: new BoxDecoration(color: Colors.white),
-      child: new Row(
-        children: <Widget>[new FloatingActionButton(onPressed: increment),new Text('$count',textDirection: TextDirection.ltr)],
-      ));
+        decoration: new BoxDecoration(color: Colors.white),
+        child: new Row(
+          children: <Widget>[
+            new FloatingActionButton(onPressed: increment),
+            new Text('$count', textDirection: TextDirection.ltr)
+          ],
+        ));
   }
 
 
-
 }
-
-
 
 
 class MyHomePage extends StatefulWidget {
@@ -144,7 +160,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.display1,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .display1,
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/utils/ScreenUtil.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class My extends State<MyAccount> with AutomaticKeepAliveClientMixin {
     super.build(context);
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-
+    MediaQuery.of(context);
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -198,8 +199,8 @@ class My extends State<MyAccount> with AutomaticKeepAliveClientMixin {
     return ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          width: 65,
-          height: 26,
+          width: ScreenUtil.getInstance().getAdapterSize(65),
+          height: ScreenUtil.getInstance().getAdapterSize(26),
           child: FlatButton(
             child: Text("兑换"),
             onPressed: _neverSatisfied,

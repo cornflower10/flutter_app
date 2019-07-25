@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/page/Address.dart';
+import 'package:flutter_app/utils/ScreenUtil.dart';
 import 'package:flutter_app/widget/TextEllipsis.dart';
 
 class AddOrder extends StatefulWidget {
@@ -26,17 +28,26 @@ class AddOrderState extends State<AddOrder> {
               Navigator.pop(context);
             }),
       ),
-      body: Column(
-        children: <Widget>[
-          address(),
-          Offstage(
-            child: _chooseType(),
-            offstage: !show,
-          ),
-          Offstage(
-            child: tags(),
-            offstage: show,
-          )
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverList(
+              delegate: SliverChildListDelegate([
+            Column(
+              children: <Widget>[
+                address(),
+                Offstage(
+                  child: _chooseType(),
+                  offstage: !show,
+                ),
+                Offstage(
+                  child: tags(),
+                  offstage: show,
+                ),
+                _chooseTime(),
+                _commit()
+              ],
+            )
+          ]))
         ],
       ),
     );
@@ -48,62 +59,66 @@ class AddOrderState extends State<AddOrder> {
       child: Card(
         child: Container(
           padding: EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(
-                  flex: 12,
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              "放",
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.only(left: 16),
-                              child: Text("18550073882"),
-                              alignment: Alignment.centerRight,
-                            ),
-                            flex: 5,
-                          )
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 6),
-                        child: Row(
+          child: InkWell(
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Address())),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                    flex: 12,
+                    child: Column(
+                      children: <Widget>[
+                        Row(
                           children: <Widget>[
                             Expanded(
-                              child: Icon(
-                                Icons.location_on,
-                                color: Colors.black38,
-                                size: 18,
+                              child: Text(
+                                "放",
                               ),
                             ),
                             Expanded(
-                                flex: 10,
-                                child: Text(
-                                  "dfhs回复空间錒十分看好卡接电话客户反馈收到就发贺卡好风景啊翻",
-                                  softWrap: true,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                )),
+                              child: Container(
+                                margin: EdgeInsets.only(left: 16),
+                                child: Text("18550073882"),
+                                alignment: Alignment.centerRight,
+                              ),
+                              flex: 5,
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  )),
-              Expanded(
-                  flex: 1,
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.black38,
-                    size: 14.0,
-                  ))
-            ],
+                        Padding(
+                          padding: EdgeInsets.only(top: 6),
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Icon(
+                                  Icons.location_on,
+                                  color: Colors.black38,
+                                  size: 18,
+                                ),
+                              ),
+                              Expanded(
+                                  flex: 10,
+                                  child: Text(
+                                    "dfhs回复空间錒十分看好卡接电话客户反馈收到就发贺卡好风景啊翻",
+                                    softWrap: true,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  )),
+                            ],
+                          ),
+                        )
+                      ],
+                    )),
+                Expanded(
+                    flex: 1,
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.black38,
+                      size: 14.0,
+                    ))
+              ],
+            ),
           ),
         ),
       ),
@@ -173,6 +188,7 @@ class AddOrderState extends State<AddOrder> {
               children: <Widget>[
                 Text("已选类别："),
                 ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return Row(
                       children: <Widget>[
@@ -197,9 +213,59 @@ class AddOrderState extends State<AddOrder> {
                   shrinkWrap: true,
                 ),
                 Container(
-                   alignment: Alignment.center,
+                    alignment: Alignment.center,
                     child: FlatButton(
                         onPressed: _showBottomSheet, child: Text("继续添加")))
+              ],
+            )),
+      ),
+    );
+  }
+
+  Widget _chooseTime() {
+    return Container(
+      padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+      child: Card(
+        child: Container(
+            padding: EdgeInsets.all(16),
+            child: Column(
+//              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text("预约时间："),
+                    Row(
+                      children: <Widget>[
+                        Text("选择预约时间"),
+                        Container(
+                            margin: EdgeInsets.only(left: 4),
+                            child: Icon(Icons.keyboard_arrow_right))
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      child: Text("留言备注"),
+                    ),
+                    Container(
+                      width: ScreenUtil.getInstance().getAdapterSize(220),
+                      child: TextField(
+                        style: TextStyle(fontSize: 13, color: Colors.black87),
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(10),
+                          border: InputBorder.none,
+                          hintText: "可描述物品状态，要求",
+                          hintStyle: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ],
             )),
       ),
@@ -262,6 +328,21 @@ class AddOrderState extends State<AddOrder> {
             ],
           )),
     );
+  }
+
+  _commit() {
+    return Container(
+        margin: EdgeInsets.all(16),
+        child: MaterialButton(
+          shape: StadiumBorder(),
+          height: 40,
+          minWidth: ScreenUtil.getInstance().screenWidth,
+          color: Colors.green,
+          child: Text(
+            "提交预约",
+            style: TextStyle(color: Colors.white),
+          ),
+        ));
   }
 }
 
