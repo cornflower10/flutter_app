@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app/utils/ScreenUtil.dart';
 
 class Address extends StatefulWidget {
@@ -15,6 +16,8 @@ class AddressState extends State<Address> {
   String _phone;
   String _address;
   String _addressDetail;
+
+  TextEditingController _addTextEdit = TextEditingController();
 
   FocusNode _mFocusNode = FocusNode();
 
@@ -80,7 +83,7 @@ class AddressState extends State<Address> {
                             height: 1,
                           ),
                           InkWell(
-                            onTap:()=> print("------"),
+                            onTap:()=> _map(),
                             child: TextFormField(
                                 enabled: false,
                                 focusNode: _mFocusNode,
@@ -99,6 +102,7 @@ class AddressState extends State<Address> {
                             height: 1,
                           ),
                           TextFormField(
+                            controller: _addTextEdit,
                               onSaved: (val) => _addressDetail = val,
                               decoration: InputDecoration(
                                   icon: Icon(
@@ -135,5 +139,25 @@ class AddressState extends State<Address> {
             ),
           ),
         ));
+  }
+
+  _map() async {
+    final channel = const MethodChannel('baiduMap');
+
+    String success = await channel.invokeMethod('battery');
+//
+//    print(success);
+    receiveMessage();
+
+
+  }
+
+  void receiveMessage(){
+    final channe2 = const BasicMessageChannel('baiduMap',StandardMessageCodec());
+    channe2.setMessageHandler((message)async{
+      setState(() {
+        _address = message;
+      });
+    });
   }
 }
