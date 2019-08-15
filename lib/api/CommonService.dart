@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_app/api/Api.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:flutter_app/api/BaseData.dart';
 
 class CommonService{
 
@@ -10,7 +11,7 @@ class CommonService{
       headers:{
         'X-App-Type':'android',
       'X-App-Key': 'android',
-      'X-App-Version':'2.0.8',
+      'X-App-Version':'2.3.8',
       'X-App-Env':'dev'}
     );
   }
@@ -20,6 +21,22 @@ class CommonService{
         .catchError((error){
            errorCallBack(error);
           print('error:'+error.toString());
+    });
+  }
+  Future<BaseData<T>> get<T>(String url,Function callBack,Function errorCallBack) async{
+    Dio().get(url,options: _getOptions())
+        .then((response){callBack(response.data);},)
+        .catchError((error){
+      errorCallBack(error);
+      print('error:'+error.toString());
+    });
+  }
+  void post(String url,String data,Function callBack,Function errorCallBack) async{
+    Dio().post(url,data:data,options: _getOptions())
+        .then((response){callBack(response.data);},)
+        .catchError((error){
+      errorCallBack(error);
+      print('error:'+error.toString());
     });
   }
 

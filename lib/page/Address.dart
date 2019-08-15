@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/utils/ScreenUtil.dart';
+import 'package:flutter_baidu_map_sdk/flutter_baidu_map.dart';
 
 class Address extends StatefulWidget {
   @override
@@ -10,16 +11,18 @@ class Address extends StatefulWidget {
   }
 }
 
-class AddressState extends State<Address> {
+class AddressState extends State<Address> implements ReceiveCallBack{
   GlobalKey<FormState> _formKey = new GlobalKey();
   String _name;
   String _phone;
-  String _address;
+  String _address = "请选择地址";
   String _addressDetail;
 
   TextEditingController _addTextEdit = TextEditingController();
 
   FocusNode _mFocusNode = FocusNode();
+
+  FlutterBaiduMap _flutterPlugin = null;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +86,7 @@ class AddressState extends State<Address> {
                             height: 1,
                           ),
                           InkWell(
-                            onTap:()=> _map(),
+                            onTap:()=> _initPlatformState(),
                             child: TextFormField(
                                 enabled: false,
                                 focusNode: _mFocusNode,
@@ -95,7 +98,7 @@ class AddressState extends State<Address> {
                                     contentPadding: EdgeInsets.only(
                                         right: 10, top: 10, bottom: 10),
                                     border: InputBorder.none,
-                                    hintText: "请选择地址",
+                                    hintText: _address,
                                     hintStyle: TextStyle(color: Colors.grey))),
                           ),
                           Divider(
@@ -141,23 +144,25 @@ class AddressState extends State<Address> {
         ));
   }
 
-  _map() async {
-    final channel = const MethodChannel('baiduMap');
 
-    String success = await channel.invokeMethod('battery');
-//
-//    print(success);
-    receiveMessage();
+    void _initPlatformState() {
+      _flutterPlugin = new FlutterBaiduMap(this);
+      FlutterBaiduMap.startLocation();
+      _flutterPlugin.initReceiveLocation();
+    }
 
 
-  }
-
-  void receiveMessage(){
-    final channe2 = const BasicMessageChannel('baiduMap',StandardMessageCodec());
-    channe2.setMessageHandler((message)async{
-      setState(() {
-        _address = message;
-      });
+  @override
+  void onEnvent(Object o) {
+    setState(() {
+      _address = o.toString();
     });
+
   }
+
+  @override
+  void onError(Object o) {
+
+  }
+
 }

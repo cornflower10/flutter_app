@@ -1,6 +1,6 @@
 class Api{
-//  static final String IP = 'http://172.16.128.36:8080/';
-  static final String IP = 'http://172.16.123.217:8081/';
+  static final String IP = 'http://172.16.128.36:8080/';
+//  static final String IP = 'http://172.16.123.217:8081/';
 
   static final String HOME_BANNER = '${IP}lunbo/list';
 
