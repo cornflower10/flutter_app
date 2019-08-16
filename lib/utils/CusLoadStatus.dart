@@ -9,8 +9,11 @@ class CusLoadStatus {
 
   static int status(
       {bool hasError, List data, bool refresh, bool loadMore}) {
-    if (refresh) {
-      if (hasError) {
+    if(refresh!=true&&loadMore!=true&&data==null&&hasError!=true){
+      return loading;
+    }
+    if (refresh == true) {
+      if (hasError == true) {
         return refresh_error;
       }
       if (data == null || data.isEmpty) {
@@ -18,8 +21,8 @@ class CusLoadStatus {
       } else {
         return refresh_success;
       }
-    } else if (loadMore) {
-      if (hasError) {
+    } else if (loadMore==true) {
+      if (hasError==true) {
         return loadmore_error;
       }
       if (data == null || data.isEmpty) {

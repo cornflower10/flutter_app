@@ -46,10 +46,15 @@ class OrderListState extends State<OrderList>
   @override
   Widget build(BuildContext context) {
     orderBloc = BlocProvider.of<OrderBloc>(context);
+    orderBloc.statusStrem.listen((cStatus){
+      LogUtils.d("-----------listen---------$cStatus");
+      status = cStatus;
+    });
     LogUtils.d("-----------build---------");
     return StreamBuilder(
         stream: orderBloc.out,
         builder: (BuildContext context, AsyncSnapshot<List<OrderItem>> list) {
+
           if (status ==CusLoadStatus.loading) {
             _onRefresh();
           }
@@ -174,7 +179,7 @@ class OrderListState extends State<OrderList>
     await Future.delayed(Duration(milliseconds: 5000));
     LogUtils.d("-----------_onRefresh---------");
     _list.clear();
-    orderBloc.getOrders(status);
+    orderBloc.getOrders(status,isReload);
   }
 
   void _listener() {

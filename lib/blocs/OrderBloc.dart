@@ -17,6 +17,13 @@ class OrderBloc implements BaseBloc {
   Stream<List<OrderItem>> get out =>
       _streamController.stream; // 这个就是 ui 需要使用的 stream
 
+  StreamController<int> statusStreamController =
+      new StreamController<int>.broadcast();
+
+  StreamSink<int> get statusSink => statusStreamController.sink;
+
+  Stream<int> get statusStrem => statusStreamController.stream;
+
   int page = 0;
 
   OrderRepository _orderRepository = OrderRepository();
@@ -24,29 +31,39 @@ class OrderBloc implements BaseBloc {
   @override
   void dispose() {
     _streamController.close();
+    statusStreamController.close();
     LogUtils.d("_streamController.close()");
   }
 
-    getOrders(status) {
-      page = 0;
-      _orderRepository.orderList().then((list) {
-      status = CusLoadStatus.status(hasError: false,data: list,refresh: true);
+  getOrders(status, bool isReload) {
+    page = 0;
+    if (isReload == true) {
+      status = CusLoadStatus.loading;
+      _sink.add(null);
+    }
+    _orderRepository.orderList().then((list) {
+      status = CusLoadStatus.status(hasError: false, data: list, refresh: true);
+      LogUtils.d("status:$status");
+      statusSink.add(status);
       _sink.add(list);
-    }).catchError((error){
-        status = CusLoadStatus.status(hasError: true,refresh: true);
+    }).catchError((error) {
+      status = CusLoadStatus.status(hasError: true, refresh: true);
+      statusSink.add(status);
       _sink.addError(error);
-
     });
   }
 
   getOrdersLoadMore(int status) {
     page++;
     _orderRepository.orderList().then((list) {
-      status = CusLoadStatus.status(hasError: false,data: list,loadMore: true);
+      status =
+          CusLoadStatus.status(hasError: false, data: list, loadMore: true);
+      statusSink.add(status);
       _sink.add(list);
-    }).catchError((error){
+    }).catchError((error) {
       page--;
-      status = CusLoadStatus.status(hasError: true,loadMore: true);
+      status = CusLoadStatus.status(hasError: true, loadMore: true);
+      statusSink.add(status);
       _sink.addError(error);
     });
   }
